@@ -1,0 +1,14 @@
+use_frameworks!
+
+target 'HACRouter_Example' do
+  pod 'HACRouter', :path => '../'
+
+  target 'HACRouter_Tests' do
+    inherit! :search_paths
+
+    pod 'Specta'
+  pod 'Expecta'
+  pod 'FBSnapshotTestCase'
+  pod 'Expecta+Snapshots'
+  end
+end
