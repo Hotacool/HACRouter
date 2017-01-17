@@ -1,0 +1,18 @@
+{
+    "Scheme": {
+        "Name": "RouteTest",
+        "Handler": "",
+        "Modules": [
+                    {
+                    "Name": "AcountModule",
+                    "Handler": "HACAcountHandler",
+                    "Pages": [
+                    {
+                    "Name": "LoginPage",
+                    },
+                    ],
+                    },
+                    ],
+        
+    },
+}

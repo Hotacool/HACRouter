@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ModuleA</key>
+	<dict>
+		<key>PageA</key>
+		<dict>
+			<key>FuncA</key>
+			<string>NSString</string>
+			<key>FuncB</key>
+			<string>NSString</string>
+			<key>FuncC</key>
+			<string>NSDictionary</string>
+		</dict>
+		<key>PageB</key>
+		<dict>
+			<key>FuncA</key>
+			<string>NSArray</string>
+			<key>FuncB</key>
+			<string></string>
+		</dict>
+	</dict>
+	<key>ModuleB</key>
+	<dict>
+		<key>PageA</key>
+		<dict>
+			<key>FuncA</key>
+			<string>UIViewController</string>
+		</dict>
+		<key>PageB</key>
+		<dict>
+			<key>FuncA</key>
+			<string>NSString</string>
+			<key>FuncB</key>
+			<string></string>
+		</dict>
+	</dict>
+</dict>
+</plist>

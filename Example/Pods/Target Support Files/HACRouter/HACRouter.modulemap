@@ -1,0 +1,6 @@
+framework module HACRouter {
+  umbrella header "HACRouter-umbrella.h"
+
+  export *
+  module * { export * }
+}

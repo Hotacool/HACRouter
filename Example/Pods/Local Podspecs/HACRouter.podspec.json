@@ -1,0 +1,22 @@
+{
+  "name": "HACRouter",
+  "version": "0.1.0",
+  "summary": "A short description of HACRouter.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/HACRouter",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "sicong.qian": "shisosen@163.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/HACRouter.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "HACRouter/Classes/**/*"
+}

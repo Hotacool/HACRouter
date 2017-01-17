@@ -23,6 +23,9 @@
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		C083DFA139C6BD4856FCC160 /* Pods_HACRouter_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FD596F893AA09526F5BE45 /* Pods_HACRouter_Tests.framework */; };
 		C8869F3D9B2543D4B390A38B /* Pods_HACRouter_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A5B8C369AF094EDA4244E3 /* Pods_HACRouter_Example.framework */; };
+		FA51CC011E2CB1EE0010E746 /* HACTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FA51CC001E2CB1EE0010E746 /* HACTest.m */; };
+		FA51CC0B1E2DAD470010E746 /* RouteMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA51CC0A1E2DAD470010E746 /* RouteMap.plist */; };
+		FA51CC0F1E2DB3BA0010E746 /* RouteMap.json in Resources */ = {isa = PBXBuildFile; fileRef = FA51CC0E1E2DB3BA0010E746 /* RouteMap.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,13 +61,17 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
-		69005F9EEE750B4A6B3DCE99 /* HACRouter.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = HACRouter.podspec; path = ../HACRouter.podspec; sourceTree = "<group>"; };
+		69005F9EEE750B4A6B3DCE99 /* HACRouter.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HACRouter.podspec; path = ../HACRouter.podspec; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		99314D4DBF97F3A94C304081 /* Pods-HACRouter_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HACRouter_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-HACRouter_Example/Pods-HACRouter_Example.release.xcconfig"; sourceTree = "<group>"; };
-		9D85CB29FEC53DDFE391F0F1 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		AB9B30C6C23282B343DEB16B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		9D85CB29FEC53DDFE391F0F1 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		AB9B30C6C23282B343DEB16B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		DA1A1DFB51CB72F922213A7D /* Pods-HACRouter_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HACRouter_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HACRouter_Tests/Pods-HACRouter_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC1B2EEF8E4D3E3878FC1C6D /* Pods-HACRouter_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HACRouter_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HACRouter_Tests/Pods-HACRouter_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		FA51CBFF1E2CB1EE0010E746 /* HACTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HACTest.h; sourceTree = "<group>"; };
+		FA51CC001E2CB1EE0010E746 /* HACTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HACTest.m; sourceTree = "<group>"; };
+		FA51CC0A1E2DAD470010E746 /* RouteMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RouteMap.plist; sourceTree = "<group>"; };
+		FA51CC0E1E2DB3BA0010E746 /* RouteMap.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RouteMap.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +142,8 @@
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* HACViewController.h */,
 				6003F5A6195388D20070C39A /* HACViewController.m */,
+				FA51CBFF1E2CB1EE0010E746 /* HACTest.h */,
+				FA51CC001E2CB1EE0010E746 /* HACTest.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -149,6 +158,8 @@
 				6003F596195388D20070C39A /* InfoPlist.strings */,
 				6003F599195388D20070C39A /* main.m */,
 				6003F59B195388D20070C39A /* HACRouter-Prefix.pch */,
+				FA51CC0A1E2DAD470010E746 /* RouteMap.plist */,
+				FA51CC0E1E2DB3BA0010E746 /* RouteMap.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -277,6 +288,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
+				FA51CC0B1E2DAD470010E746 /* RouteMap.plist in Resources */,
+				FA51CC0F1E2DB3BA0010E746 /* RouteMap.json in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
@@ -350,7 +363,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		7B2C29DB7FDB0B818AD99EEE /* [CP] Embed Pods Frameworks */ = {
@@ -380,7 +393,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -390,6 +403,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA51CC011E2CB1EE0010E746 /* HACTest.m in Sources */,
 				6003F59E195388D20070C39A /* HACAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* HACViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
