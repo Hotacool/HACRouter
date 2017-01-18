@@ -9,9 +9,9 @@
 #import "HACRouteURL.h"
 #import "HACHelp.h"
 
-static NSString * const HACRouteURLslash=@"/";
-static NSString * const HACRouteURLAnd=@"&";
-static NSString * const HACRouteURLEqual=@"=";
+NSString * const HACRouteURLslash=@"/";
+NSString * const HACRouteURLAnd=@"&";
+NSString * const HACRouteURLEqual=@"=";
 @implementation HACRouteURL
 
 - (instancetype)initWithURL:(NSURL *)url {

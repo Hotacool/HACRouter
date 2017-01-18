@@ -12,15 +12,19 @@
 @implementation HACRouteNode
 
 - (instancetype)initWithName:(NSString*)name
-                     handler:(NSString*)handler
-                  paramRules:(NSDictionary*)paramRules{
+                     handler:(NSString*)handler {
     if (self = [super init]) {
         _name = [name copy];
         _handler = [handler copy];
-        _paramRules = [paramRules copy];
         _childNodes = [NSMutableArray array];
     }
     return self;
+}
+
+- (BOOL)updateName:(NSString*)name handler:(NSString*)handler {
+    _name = name;
+    _handler = handler;
+    return YES;
 }
 
 - (BOOL)isValidateWithRouteURL:(HACRouteURL *)url {

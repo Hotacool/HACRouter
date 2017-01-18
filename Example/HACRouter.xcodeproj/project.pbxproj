@@ -26,6 +26,9 @@
 		FA51CC011E2CB1EE0010E746 /* HACTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FA51CC001E2CB1EE0010E746 /* HACTest.m */; };
 		FA51CC0B1E2DAD470010E746 /* RouteMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA51CC0A1E2DAD470010E746 /* RouteMap.plist */; };
 		FA51CC0F1E2DB3BA0010E746 /* RouteMap.json in Resources */ = {isa = PBXBuildFile; fileRef = FA51CC0E1E2DB3BA0010E746 /* RouteMap.json */; };
+		FA51CC381E2F59D10010E746 /* HACAcountHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FA51CC371E2F59D10010E746 /* HACAcountHandler.m */; };
+		FA51CC4F1E2F78980010E746 /* AlipayActionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FA51CC4E1E2F78980010E746 /* AlipayActionHandler.m */; };
+		FA51CC521E2F78C50010E746 /* iapPage.m in Sources */ = {isa = PBXBuildFile; fileRef = FA51CC511E2F78C50010E746 /* iapPage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +75,12 @@
 		FA51CC001E2CB1EE0010E746 /* HACTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HACTest.m; sourceTree = "<group>"; };
 		FA51CC0A1E2DAD470010E746 /* RouteMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RouteMap.plist; sourceTree = "<group>"; };
 		FA51CC0E1E2DB3BA0010E746 /* RouteMap.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = RouteMap.json; sourceTree = "<group>"; };
+		FA51CC361E2F59D10010E746 /* HACAcountHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HACAcountHandler.h; sourceTree = "<group>"; };
+		FA51CC371E2F59D10010E746 /* HACAcountHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HACAcountHandler.m; sourceTree = "<group>"; };
+		FA51CC4D1E2F78980010E746 /* AlipayActionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlipayActionHandler.h; sourceTree = "<group>"; };
+		FA51CC4E1E2F78980010E746 /* AlipayActionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlipayActionHandler.m; sourceTree = "<group>"; };
+		FA51CC501E2F78C50010E746 /* iapPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iapPage.h; sourceTree = "<group>"; };
+		FA51CC511E2F78C50010E746 /* iapPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iapPage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +153,12 @@
 				6003F5A6195388D20070C39A /* HACViewController.m */,
 				FA51CBFF1E2CB1EE0010E746 /* HACTest.h */,
 				FA51CC001E2CB1EE0010E746 /* HACTest.m */,
+				FA51CC361E2F59D10010E746 /* HACAcountHandler.h */,
+				FA51CC371E2F59D10010E746 /* HACAcountHandler.m */,
+				FA51CC4D1E2F78980010E746 /* AlipayActionHandler.h */,
+				FA51CC4E1E2F78980010E746 /* AlipayActionHandler.m */,
+				FA51CC501E2F78C50010E746 /* iapPage.h */,
+				FA51CC511E2F78C50010E746 /* iapPage.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -403,9 +418,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA51CC381E2F59D10010E746 /* HACAcountHandler.m in Sources */,
 				FA51CC011E2CB1EE0010E746 /* HACTest.m in Sources */,
+				FA51CC521E2F78C50010E746 /* iapPage.m in Sources */,
 				6003F59E195388D20070C39A /* HACAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* HACViewController.m in Sources */,
+				FA51CC4F1E2F78980010E746 /* AlipayActionHandler.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

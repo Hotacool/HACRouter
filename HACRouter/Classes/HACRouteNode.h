@@ -12,13 +12,15 @@
 @interface HACRouteNode : HACObject
 @property (nonatomic, copy, readonly) NSString *name;
 @property (nonatomic, copy, readonly) NSString *handler;
-@property (nonatomic, copy, readonly) NSDictionary *paramRules;
+
+@property (nonatomic, copy) NSString *nearestHandler;
 
 @property (nonatomic, copy, readonly) NSMutableArray <HACRouteNode*>*childNodes;
 
 - (instancetype)initWithName:(NSString*)name
-                     handler:(NSString*)handler
-                  paramRules:(NSDictionary*)paramRules ;
+                     handler:(NSString*)handler ;
+
+- (BOOL)updateName:(NSString*)name handler:(NSString*)handler ;
 
 - (BOOL)isValidateWithRouteURL:(HACRouteURL*)url ;
 

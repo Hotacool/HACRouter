@@ -8,6 +8,10 @@
 
 #import "HACObject.h"
 
+
+extern NSString * const HACRouteURLslash;
+extern NSString * const HACRouteURLAnd;
+extern NSString * const HACRouteURLEqual;
 @interface HACRouteURL : HACObject
 @property (nonatomic, copy, readonly) NSURL *url;
 

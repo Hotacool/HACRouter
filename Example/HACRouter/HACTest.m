@@ -20,7 +20,7 @@
     return ctrl;
 }
 
-- (void)handleRouteUrl:(id)url withCallback:(HACRouterRet)callback {
++ (void)handleRouteUrl:(HACRouteURL*)url withCallback:(HACRouterRet)callback {
     callback(@{@"key": @"Hello, work!"},nil);
 }
 

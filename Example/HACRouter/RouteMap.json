@@ -1,18 +1,75 @@
 {
-    "Scheme": {
         "Name": "RouteTest",
         "Handler": "",
-        "Modules": [
-                    {
-                    "Name": "AcountModule",
-                    "Handler": "HACAcountHandler",
-                    "Pages": [
-                    {
-                    "Name": "LoginPage",
-                    },
-                    ],
-                    },
-                    ],
+        "subNodes": [
+                     {
+                     "Name": "AcountModule",
+                     "Handler": "HACAcountHandler",
+                     "subNodes": [
+                                  {
+                                  "Name": "LoginPage",
+                                  "Handler": "",
+                                  "subNodes":[
+                                              {
+                                              "Name": "login",
+                                              "Handler":"LoginActionHandler"
+                                              },
+                                              {
+                                              "Name": "logout",
+                                              "Handler":"LogoutActionHandler"
+                                              }
+                                              ]
+                                  },
+                                  {
+                                  "Name": "personalPage",
+                                  "Handler": "",
+                                  "subNodes":[
+                                              {
+                                              "Name": "personImage",
+                                              "Handler":""
+                                              },
+                                              {
+                                              "Name": "friendList",
+                                              "Handler":"friendListHandler"
+                                              }
+                                              ]
+                                  }
+                                  ]
+                     },
+                     {
+                     "Name": "PaymentModule",
+                     "Handler": "",
+                     "subNodes": [
+                                  {
+                                  "Name": "alipayPage",
+                                  "Handler": "AlipayActionHandler",
+                                  "subNodes":[
+                                              {
+                                              "Name": "buy",
+                                              "Handler":""
+                                              },
+                                              {
+                                              "Name": "cancel",
+                                              "Handler":""
+                                              }
+                                              ]
+                                  },
+                                  {
+                                  "Name": "iapPage",
+                                  "Handler": "",
+                                  "subNodes":[
+                                              {
+                                              "Name": "buy",
+                                              "Handler":""
+                                              },
+                                              {
+                                              "Name": "cancel",
+                                              "Handler":""
+                                              }
+                                              ]
+                                  }
+                                  ]
+                     }
+                     ]
         
-    },
-}
+    }

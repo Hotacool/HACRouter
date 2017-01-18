@@ -18,10 +18,11 @@
 - (BOOL)addTreeNodeByRouteURL:(HACRouteURL*)url ;
 
 - (BOOL)addTreeNodeByRouteURL:(HACRouteURL *)url
-                  withHandler:(NSString*)handlerName
-                   paramRules:(NSDictionary*)paramRules ;
+                  withHandler:(NSString*)handlerName;
 
 - (HACRouteNode*)queryTreeByRouteURL:(HACRouteURL*)url ;
+
+- (HACRouteNode*)queryNearestHandlerNodeByNode:(HACRouteNode*)node ;
 
 - (void)walkTreeNodes ;
 @end

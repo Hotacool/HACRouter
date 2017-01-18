@@ -9,35 +9,31 @@
 #import "HACViewController.h"
 #import <HACRouter/HACRouter.h>
 
-@interface HACViewController () <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) UITableView *tableView;
+#import <objc/message.h>
+
+@interface HACViewController ()
+@property (nonatomic, strong) UILabel *showLabel;
+@property (nonatomic, strong) UITextField *textField;
+@property (nonatomic, strong) UIButton *btn;
 @end
 
 @implementation HACViewController {
-    NSArray *dataArr;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    dataArr = @[
-                @"Example://x-callback-url/aaa",
-                @"Example://x-callback-url/bbb",
-                @"Example://x-callback-url/ccc",
-                @"/x-callback-url/ddd",
-                @"/x-url/eee"
-                ];
+    [[HACRouterCenter defautRouterCenter] registerUrlWithJsonFile:@"RouteMap"];
+
+    self.showLabel.frame = CGRectMake(0, 0, self.view.frame.size.width, 200);
+    [self.view addSubview:self.showLabel];
+    self.textField.frame = CGRectMake(0, 200, self.view.frame.size.width, 50);
+    [self.view addSubview:self.textField];
+    self.btn.frame = CGRectMake(0, 300, self.view.frame.size.width, 50);
+    [self.view addSubview:self.btn];
+    [self.btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    [[HACRouterCenter defautRouterCenter] registerUrl:[NSURL URLWithString:@"Example://x-callback-url/aaa"] withHandler:@"HACTest"];
-    [[HACRouterCenter defautRouterCenter] registerUrl:[NSURL URLWithString:@"Example://x-callback-url/bbb"]];
-    [[HACRouterCenter defautRouterCenter] registerUrl:[NSURL URLWithString:@"Example://x-callback-url/ccc"]];
-    [[HACRouterCenter defautRouterCenter] registerUrl:[NSURL URLWithString:@"/x-callback-url/ddd"]];
-    [[HACRouterCenter defautRouterCenter] registerUrl:[NSURL URLWithString:@"/x-url/eee"] withHandler:@"HACTest"];
-    
-    self.tableView.frame = self.view.bounds;
-    [self.view addSubview:self.tableView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,44 +42,48 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (UITableView *)tableView {
-    if (!_tableView) {
-        _tableView = [[UITableView alloc] init];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+- (UILabel *)showLabel {
+    if (!_showLabel) {
+        _showLabel = [[UILabel alloc] init];
+        _showLabel.font = [UIFont systemFontOfSize:18];
+        _showLabel.textAlignment = NSTextAlignmentCenter;
+        _showLabel.numberOfLines = 0;
+        _showLabel.adjustsFontSizeToFitWidth = YES;
     }
-    return _tableView;
+    return _showLabel;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+- (UITextField *)textField {
+    if (!_textField) {
+        _textField = [[UITextField alloc] init];
+        _textField.layer.borderColor = [UIColor blueColor].CGColor;
+        _textField.layer.borderWidth = 1;
+    }
+    return _textField;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44;
+- (UIButton *)btn {
+    if (!_btn) {
+        _btn = [[UIButton alloc] init];
+        [_btn setTitle:@"send" forState:UIControlStateNormal];
+        _btn.backgroundColor = [UIColor grayColor];
+    }
+    return _btn;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return dataArr.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.textLabel.text = dataArr[indexPath.row];
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%s", __func__);
-    BOOL suc = [[HACRouterCenter defautRouterCenter] handleUrl:[NSURL URLWithString:dataArr[indexPath.row]]
+- (void)btnClick:(id)sender {
+    BOOL suc = [[HACRouterCenter defautRouterCenter] handleUrl:[NSURL URLWithString:self.textField.text]
                                                   withCallback:^(NSDictionary *dic, NSError *error) {
                                                       NSLog(@"callback: %@", dic);
+                                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                                          self.showLabel.text = [dic description];
+                                                      });
                                                   }];
     if (suc) {
         NSLog(@"success");
     } else {
         NSLog(@"failed");
+        self.showLabel.text = @"failed";
     }
 }
 
