@@ -24,7 +24,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    [[HACRouterCenter defautRouterCenter] registerUrlWithJsonFile:@"RouteMap"];
+    [[HACRouterCenter defautRouterCenter] registerUrlWithJsonFile:@"RouteMap" withCompleteBlk:^(BOOL suc) {
+        NSLog(@"load file complete: %d", suc);
+    }];
+    [[HACRouterCenter defautRouterCenter] registerUrl:[NSURL URLWithString:@"RouteTestXXXX://PaymentModule/iapPage/buy"] withHandler:@"HACTest"];
+    [[HACRouterCenter defautRouterCenter] registerUrl:[NSURL URLWithString:@"RouteTestXXXX://PaymentModule/iapPage/cancel"] withHandler:@"HACTest"];
 
     self.showLabel.frame = CGRectMake(0, 0, self.view.frame.size.width, 200);
     [self.view addSubview:self.showLabel];
@@ -72,13 +76,17 @@
 }
 
 - (void)btnClick:(id)sender {
+//    [[HACRouterCenter defautRouterCenter] currentRouteMapWithCallback:^(NSDictionary *dic) {
+//        NSLog(@"route map: %@", dic);
+//    }];
     BOOL suc = [[HACRouterCenter defautRouterCenter] handleUrl:[NSURL URLWithString:self.textField.text]
                                                   withCallback:^(NSDictionary *dic, NSError *error) {
                                                       NSLog(@"callback: %@", dic);
                                                       dispatch_async(dispatch_get_main_queue(), ^{
                                                           self.showLabel.text = [dic description];
                                                       });
-                                                  }];
+                                                  }
+                strict:YES];
     if (suc) {
         NSLog(@"success");
     } else {

@@ -8,10 +8,13 @@
 
 #import "HACObject.h"
 
-
+extern NSString *const HACRouteConfigKeyName;
+extern NSString *const HACRouteConfigKeyHandler;
+extern NSString *const HACRouteConfigKeySubNodes;
 extern NSString * const HACRouteURLslash;
 extern NSString * const HACRouteURLAnd;
 extern NSString * const HACRouteURLEqual;
+
 @interface HACRouteURL : HACObject
 @property (nonatomic, copy, readonly) NSURL *url;
 
@@ -23,7 +26,7 @@ extern NSString * const HACRouteURLEqual;
 
 + (NSString*)extractRouteSchemeFromURL:(NSURL*)url ;
 
-+ (NSDictionary*)extractRouteParametersFromURL:(NSURL*)url ;
++ (NSArray *)extractRouteParametersFromURL:(NSURL *)url ;
 
 + (NSDictionary*)extractQueryParametersFromURL:(NSURL *)url ;
 @end

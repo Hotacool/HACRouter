@@ -12,4 +12,5 @@
 #import <HACRouter/HACObject.h>
 #import <HACRouter/HACRouterCenter.h>
 #import <HACRouter/HACRouteURL.h>
+#import <HACRouter/HACRouteHandlerProtocol.h>
 #endif /* HACRouter_h */

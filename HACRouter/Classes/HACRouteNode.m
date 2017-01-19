@@ -27,10 +27,6 @@
     return YES;
 }
 
-- (BOOL)isValidateWithRouteURL:(HACRouteURL *)url {
-    return YES;
-}
-
 - (BOOL)addChildNode:(HACRouteNode *)node {
     if (HACObjectIsNull(node) || HACObjectIsEmpty(node.name)) {
         NSLog(@"node is not correct: %@", [node description]);

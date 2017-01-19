@@ -11,12 +11,8 @@
 #import "HACRouteNode.h"
 #import "HACRouteTree.h"
 
-NSString *const HACRouteConfigKeyName = @"Name";
-NSString *const HACRouteConfigKeyHandler = @"Handler";
-NSString *const HACRouteConfigKeySubNodes = @"subNodes";
-
-NSString *const HACRouteDefaultScheme = @"HACRouter";
 static NSString *const HACRouteURLPattern=@"^([\\w-_]+\\:\\/)?\\/([\\w-_]+\\/)+[\\w-_]+(\\?([\\w-_]+\\=[\\w-_]+\\&)*[\\w-_]+\\=[\\w-_]+)?$";
+static dispatch_queue_t HACRouterCenterQueue;
 @implementation HACRouterCenter
 @synthesize routeTree;
 
@@ -27,12 +23,9 @@ HAC_SINGLETON_IMPLEMENT(HACRouterCenter)
 }
 
 - (instancetype)init {
-    if (HACObjectIsNull(HACRouteDefaultScheme)) {
-        NSLog(@"HACRouteDefaultScheme not set!");
-        return nil;
-    }
     if (self = [super init]) {
         routeTree = [[HACRouteTree alloc] initWithOrigin:[[HACRouteNode alloc] initWithName:@"origin" handler:@"HACRouteHandlerDefault"]];
+        HACRouterCenterQueue = dispatch_queue_create("HACRouterCenterQueue", DISPATCH_QUEUE_CONCURRENT);
     }
     return self;
 }
@@ -41,18 +34,28 @@ HAC_SINGLETON_IMPLEMENT(HACRouterCenter)
     return [self registerUrl:url withHandler:nil];
 }
 
-- (BOOL)registerUrlWithJsonFile:(NSString*)fileName {
-    NSData *jsonData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:fileName ofType:@"json"]];
-    NSError *error;
-    id result = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
-    if (error || HACObjectIsEmpty(result)) {
+- (BOOL)registerUrlWithJsonFile:(NSString*)fileName withCompleteBlk:(void(^)(BOOL))completBlk {
+    if (HACObjectIsEmpty(fileName)) {
         return NO;
     }
-    NSLog(@"result: %@", result);
-    return [self analyzeDic:result withPrefix:@""];
-}
+    NSData *jsonData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:fileName ofType:@"json"]];
+    if (HACObjectIsNull(jsonData)) {
+        return NO;
+    }
+    dispatch_barrier_async(HACRouterCenterQueue, ^{
+        NSError *error;
+        id result = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+        if (error || HACObjectIsEmpty(result)) {
+            completBlk(NO);
+            return;
+        }
+        if ([self insertTreeNodeWithParentNode:routeTree.origin dic:result]) {
+            completBlk(YES);
+        } else {
+            completBlk(NO);
+        }
+    });
 
-- (BOOL)registerUrl:(NSURL *)url withConfigDic:(NSDictionary *)dic {
     return YES;
 }
 
@@ -64,65 +67,91 @@ HAC_SINGLETON_IMPLEMENT(HACRouterCenter)
     if (![HACRouterCenter checkURLIsValid:url]) {
         return NO;
     }
-    HACRouteURL *routeUrl = [[HACRouteURL alloc] initWithURL:url];
-    [routeTree addTreeNodeByRouteURL:routeUrl withHandler:handlerName];
+    dispatch_barrier_async(HACRouterCenterQueue, ^{
+        HACRouteURL *routeUrl = [[HACRouteURL alloc] initWithURL:url];
+        [routeTree addTreeNodeByRouteURL:routeUrl withHandler:handlerName];
+    });
     return YES;
 }
 
-- (BOOL)canHandleWithURL:(NSURL*)url {
-    return YES;
-}
-- (BOOL)handleUrl:(NSURL *)url withCallback:(HACRouterRet)callback {
-    if (HACObjectIsEmpty(url.absoluteString)) {
-        return NO;
-    }
+- (BOOL)canHandleWithURL:(NSURL*)url strict:(BOOL)strict {
     if (![HACRouterCenter checkURLIsValid:url]) {
         return NO;
     }
-    HACRouteURL *routeUrl = [[HACRouteURL alloc] initWithURL:url];
-    HACRouteNode *node = [routeTree queryTreeByRouteURL:routeUrl];
-    NSString *handleName = node.nearestHandler;
-    Class handleClass = NSClassFromString(handleName);
-    if (handleClass && [handleClass respondsToSelector:@selector(handleRouteUrl:withCallback:)]) {
-        HACBackground(^{
-            [handleClass handleRouteUrl:routeUrl withCallback:callback];
-        });
-        return YES;
+    HACRouteNode *__block node;
+    dispatch_sync(HACRouterCenterQueue, ^{
+        HACRouteURL *routeUrl = [[HACRouteURL alloc] initWithURL:url];
+        node = [routeTree queryTreeByRouteURL:routeUrl strict:strict];
+    });
+    if (HACObjectIsNull(node)) {
+        return NO;
     }
-    return NO;
+    return YES;
+}
+- (BOOL)handleUrl:(NSURL *)url withCallback:(HACRouterRet)callback {
+    return [self handleUrl:url withCallback:callback strict:NO];
+}
+
+- (BOOL)handleUrl:(NSURL*)url withCallback:(HACRouterRet)callback strict:(BOOL)strict {
+    if (![HACRouterCenter checkURLIsValid:url]) {
+        return NO;
+    }
+    dispatch_async(HACRouterCenterQueue, ^{
+        HACRouteURL *routeUrl = [[HACRouteURL alloc] initWithURL:url];
+        HACRouteNode *node = [routeTree queryTreeByRouteURL:routeUrl strict:strict];
+        if (HACObjectIsNull(node)) {
+            callback(@{@"info": @"not registered"}, [NSError errorWithDomain:NSURLErrorDomain code:400 userInfo:nil]);
+            return;
+        }
+        NSString *handleName = node.nearestHandler;
+        Class handleClass = NSClassFromString(handleName);
+        if (handleClass && [handleClass respondsToSelector:@selector(handleRouteUrl:withCallback:)]) {
+            [handleClass handleRouteUrl:routeUrl withCallback:callback];
+        } else {
+            callback(@{@"info": @"can not runtime-dispatch."}, [NSError errorWithDomain:NSURLErrorDomain code:400 userInfo:nil]);
+        }
+    });
+    return YES;
+}
+
+- (void)currentRouteMapWithCallback:(void(^)(NSDictionary*))callback {
+    dispatch_async(HACRouterCenterQueue, ^{
+        callback([routeTree walkTreeNodes]);
+    });
 }
 
 + (BOOL)checkURLIsValid:(NSURL*)url {
+    if (HACObjectIsNull(url)||HACObjectIsEmpty(url.absoluteString)) {
+        return NO;
+    }
     NSError *err;
     NSRegularExpression * patternEx = [NSRegularExpression regularExpressionWithPattern:HACRouteURLPattern options:NSRegularExpressionCaseInsensitive error:&err];
     if (HACObjectIsNull(err)) {
         NSString *matchStr = url.absoluteString;
-        if ([patternEx firstMatchInString:matchStr options:NSRegularExpressionCaseInsensitive range:NSMakeRange(0, matchStr.length)]) {
+        if ([patternEx firstMatchInString:matchStr options:0 range:NSMakeRange(0, matchStr.length)]) {
             return YES;
         }
     }
     return NO;
 }
 
-- (BOOL)analyzeDic:(NSDictionary*)dic withPrefix:(NSString*)prefix{
+- (BOOL)insertTreeNodeWithParentNode:(HACRouteNode*)parent dic:(NSDictionary*)dic {
     NSString *name = [dic objectForKey:HACRouteConfigKeyName];
     NSString *handler = [dic objectForKey:HACRouteConfigKeyHandler];
     NSArray *subModules = [dic objectForKey:HACRouteConfigKeySubNodes];
     if (HACObjectIsEmpty(name)) {
         return NO;
     }
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@", prefix, name];
-    [self registerUrl:[NSURL URLWithString:urlString] withHandler:handler];
-    
+    HACRouteNode *nodeAdd = [[HACRouteNode alloc] initWithName:name handler:handler];
+    [parent addChildNode:nodeAdd];
+    NSLog(@"add child Node: %@", [nodeAdd description]);
     BOOL __block ret = YES;
-    if (!HACObjectIsEmpty(subModules)) {
-        [subModules enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (![self analyzeDic:obj withPrefix:urlString]) {
-                ret = NO;
-                *stop = YES;
-            }
-        }];
-    }
+    [subModules enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![self insertTreeNodeWithParentNode:nodeAdd dic:obj]) {
+            ret = NO;
+            *stop = YES;
+        }
+    }];
     return ret;
 }
 @end

@@ -53,7 +53,7 @@
     return ret;
 }
 
-- (HACRouteNode*)queryTreeByRouteURL:(HACRouteURL*)url {
+- (HACRouteNode*)queryTreeByRouteURL:(HACRouteURL*)url strict:(BOOL)strict {
     NSLog(@"%s", __func__);
     HACRouteNode *__block  find;
     NSString *__block handler;
@@ -67,34 +67,44 @@
         NSLog(@"current node: %@", find.name);
         HACRouteNode *tmp = [find queryChildNodeByName:obj];
         if (HACObjectIsNull(tmp)) {
+            if (strict) {
+                find = nil;
+            }
             *stop = YES;
-        }
-        find = tmp;
-        if (!HACObjectIsEmpty(find.handler)) {
-            handler = find.handler;
+        } else {
+            find = tmp;
+            if (!HACObjectIsEmpty(find.handler)) {
+                handler = find.handler;
+            }
         }
     }];
     find.nearestHandler = handler;
     return find;
 }
 
-- (HACRouteNode *)queryNearestHandlerNodeByNode:(HACRouteNode *)node {
-    NSLog(@"%s", __func__);
+- (NSDictionary *)walkTreeNodes {
+    NSDictionary *retDic;
+    NSMutableArray *subNodes = [NSMutableArray array];
+    retDic = @{HACRouteConfigKeyName: _origin.name,
+               HACRouteConfigKeyHandler: _origin.handler,
+               HACRouteConfigKeySubNodes: subNodes
+               };
+    [self walkTreeWithNode:_origin subNodes:subNodes];
+    return retDic;
+}
+
+- (void)walkTreeWithNode:(HACRouteNode*)node subNodes:(NSMutableArray*)array {
     if (HACObjectIsNull(node)) {
-        return nil;
+        return;
     }
-    HACRouteNode *__block  find;
-    
-}
-
-- (void)walkTreeNodes {
-    [self queryTreeNode:_origin];
-}
-
-- (void)queryTreeNode:(HACRouteNode*)node {
-    NSLog(@"node: %@", node.name);
     [node.childNodes enumerateObjectsUsingBlock:^(HACRouteNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self queryTreeNode:obj];
+        NSMutableArray *subNodes = [NSMutableArray array];
+        NSDictionary *dicAdd = @{HACRouteConfigKeyName: obj.name?:@"",
+                                 HACRouteConfigKeyHandler: obj.handler?:@"",
+                                 HACRouteConfigKeySubNodes: subNodes
+                                 };
+        [array addObject:dicAdd];
+        [self walkTreeWithNode:obj subNodes:subNodes];
     }];
 }
 

@@ -9,6 +9,9 @@
 #import "HACRouteURL.h"
 #import "HACHelp.h"
 
+NSString * const HACRouteConfigKeyName = @"Name";
+NSString * const HACRouteConfigKeyHandler = @"Handler";
+NSString * const HACRouteConfigKeySubNodes = @"subNodes";
 NSString * const HACRouteURLslash=@"/";
 NSString * const HACRouteURLAnd=@"&";
 NSString * const HACRouteURLEqual=@"=";
