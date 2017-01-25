@@ -10,5 +10,5 @@
 
 @interface iapPage : NSObject
 
-+ (void)buy ;
++ (int)buy ;
 @end

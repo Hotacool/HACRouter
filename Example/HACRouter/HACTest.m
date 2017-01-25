@@ -27,4 +27,9 @@
 - (void)dealloc {
     NSLog(@"dealloc");
 }
+
++ (int)test:(int)num {
+    NSLog(@"num: %d", num);
+    return num+1;
+}
 @end

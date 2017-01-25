@@ -13,4 +13,6 @@
 @interface HACTest : NSObject <HACRouterHandlerProtocol>
 
 - (UIViewController*)presentVCToForeground:(NSString*)title ;
+
++ (int)test:(int)num ;
 @end

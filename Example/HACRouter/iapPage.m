@@ -10,8 +10,9 @@
 
 @implementation iapPage
 
-+ (void)buy {
++ (int)buy {
     NSLog(@"%s", __func__);
+    return 1990;
 }
 
 + (void)cancel {
